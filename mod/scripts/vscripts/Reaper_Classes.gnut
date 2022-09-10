@@ -501,7 +501,7 @@ void function ReaperClassesInit(){
                     if (targetangles.y > 0) {targetangles.y = targetangles.y - 180}
                     thread this.mover.NonPhysicsRotateTo(targetangles,0.3,0,0)
 
-                    /*
+
                     float distance = pow((pow(reaperpos.x - targetpos.x,2))+(pow(reaperpos.y - targetpos.y,2))+(pow(reaperpos.z - targetpos.z,2)),0.5) //formula from google , suprised it works
 
                     vector launcharcpoint = reaperpos + AnglesToForward(targetangles)*(distance/3) + <0,0,(targetpos.z - reaperpos.z) + distance/4.5 + 180>
@@ -512,28 +512,7 @@ void function ReaperClassesInit(){
                     wait 0.75
                     this.mover.NonPhysicsMoveTo(targetpos,0.75,0,0.3)
                     wait 0.75
-                    */
 
-                    float positionDifferenceX = reaperpos.x - targetpos.x;
-                    float positionDifferenceY = reaperpos.z - targetpos.z;
-                    array<vector> positions
-
-                    float angle = 180;
-                    float radius = 20;
-
-                    for (int anglePos = 0; anglePos < 180; anglePos++) {
-                        vector newvector
-                        newvector.x = radius * cos(anglePos) + positionDifferenceX;
-                        newvector.z = radius * sin(anglePos) + positionDifferenceY;
-                        newvector.y = reaperpos.y
-                        positions.append(newvector)
-                        print(newvector)
-                    }
-
-                    foreach (position in positions) {
-                        this.mover.NonPhysicsMoveTo(position,0.1,0,0)
-                        wait 0.1
-                    }
 
                     try {
                         this.reaper.SetHealth(this.reaper.GetHealth()+80)
