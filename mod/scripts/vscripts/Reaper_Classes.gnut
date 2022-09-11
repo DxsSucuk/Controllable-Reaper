@@ -508,16 +508,39 @@ void function ReaperClassesInit(){
 
                     thread this.PlayLaunchAnim()
 
-                    this.mover.NonPhysicsMoveTo(launcharcpoint,0.75,0.3,0)
-                    wait 0.75
-                    this.mover.NonPhysicsMoveTo(targetpos,0.75,0,0.3)
-                    wait 0.75
+                    float xDiff = reaperpos.x - targetpos.x;
+                    float zDiff = reaperpos.z - targetpos.z;
+                    print(xDiff);
+                    print(zDiff);
+                    array<vector> circlePositions;
+                    float circleAngle = 4; // half circle
+                    float middleX = (reaperpos.x + (xDiff / 2));
+                    float middleZ = (reaperpos.z + (zDiff / 2));
+                    float radius = (xDiff / 2);
+
+                    if (radius < 0) radius = radius * -1;
+
+                    for (int currentAnglePos = 0; currentAnglePos < circleAngle; currentAnglePos++) {
+                        vector circlePositionPoint;
+                        circlePositionPoint.x = radius * cos(currentAnglePos) + middleX;
+                        circlePositionPoint.z = radius * sin(currentAnglePos) + middleZ;
+                        circlePositionPoint.y = reaperpos.y;
+                        circlePositions.append(circlePositionPoint);
+                        print(circlePositionPoint);
+                    }
+
+
+                    foreach (vecPosition in circlePositions) {
+                        this.mover.NonPhysicsMoveTo(vecPosition, 0.2,0.1,0)
+                        wait 0.2;
+                    }
+
+                    this.mover.NonPhysicsMoveTo(targetpos,0.75,0.3,0)
 
 
                     try {
                         this.reaper.SetHealth(this.reaper.GetHealth()+80)
                         Explosion_DamageDefSimple(damagedef_reaper_groundslam,targetpos,expect entity (this.reaper.GetOwner()),expect entity (this.reaper),targetpos)//this does 80 damage to reaper for some reason
-
                     }catch(ex){}
 
 
